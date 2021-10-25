@@ -66,8 +66,10 @@ i = d_selcionados['NU_IDADE']
 i.value_counts().sort_index()
 ```
 ```python
+plt.suptitle('Idade dos participantes')
 i.hist(bins=30)
 ```
+![Quantidade de participantes por idade](https://github.com/EryckNoronha/dados-enem/blob/main/Imagens/Idade_dos_participantes.png)
 ```python
 #selecionando coluna
 colunasSexo = d_selcionados['TP_SEXO']
