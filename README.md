@@ -1,5 +1,11 @@
-# Analise de dados Enem
+# **Analise de dados Enem**
 ![GitHub](https://img.shields.io/github/license/EryckNoronha/dados-enem)
+
+Esta analise tem como objetivo explorar os comandos das bibliotecas Pandas e Matplotlib.
+
+O dataset foi reduzido a 10000 linhas para melhor execução.
+
+As colunas foram iniciadas em seu tamanho original sendo selencionadas algumas no decorrer do estudo.
 
 ```python
 
@@ -11,11 +17,11 @@ import matplotlib.pyplot as plt
 
 ```python
 #lendo o arqivo csv
-#nrows= 1000 
+#Eduzindo linhas: nrows= 1000 
 d = pd.read_csv('MICRODADOS_ENEM_2018.csv',sep= ';', encoding= 'ISO-8859-1', nrows= 10000)
 ```
 ```python
-#para saber o nome de todas a s colunas dentro de um array
+#para saber o nome de todas as colunas dentro de um array
 d.columns.values
 ```
 
@@ -88,6 +94,7 @@ porcentagemSexo = [100*x/tp_sexo.sum() for x in tp_sexo]
 ```python
 porcentagemSexo
 ```
+![Porcentagem por sexo](https://github.com/EryckNoronha/dados-enem/blob/main/Imagens/porcentagem%20por%20sexo.png)
 ```python
 #se eu quiser apenas os dados do sexo femino indico entre colchetes o index
 somenteFeminino = tp_sexo[0]
@@ -105,15 +112,18 @@ colunasSexoNotaRedacao
 colunasSexoNotaRedacao = colunasSexoNotaRedacao.dropna()
 colunasSexoNotaRedacao.head()
 ```
+![Nota redação por sexo](https://github.com/EryckNoronha/dados-enem/blob/main/Imagens/nota%20reda%C3%A7%C3%A3o%20por%20sexo%201.png)
 ```python
 #o comando groupby agrupo por tipo da coluna selecionada
 # comando count() conta tudo
 colunasSexoNotaRedacao.groupby('TP_SEXO').count()
 ```
+![Nota redação por sexo](https://github.com/EryckNoronha/dados-enem/blob/main/Imagens/quantidade%20reda%C3%A7%C3%A3o%20por%20sexo.png)
 ```python
 #selecionando valor minimo
 colunasSexoNotaRedacao.groupby('TP_SEXO').max()
 ```
+![Valor maximo](https://github.com/EryckNoronha/dados-enem/blob/main/Imagens/maiores%20notas%20reda%C3%A7%C3%A3o.png)
 ```python
 #buscando a menor nota de redação maior que zero
 colunasSexoNotaRedacao[colunasSexoNotaRedacao.NU_NOTA_REDACAO > 0].groupby('TP_SEXO').min()
@@ -122,15 +132,18 @@ colunasSexoNotaRedacao[colunasSexoNotaRedacao.NU_NOTA_REDACAO > 0].groupby('TP_S
 #calculando a media
 colunasSexoNotaRedacao.groupby('TP_SEXO').mean()
 ```
+![media](https://github.com/EryckNoronha/dados-enem/blob/main/Imagens/media%20notas%20reda%C3%A7%C3%A3o.png)
 ```python
 #calculando a mediana
 colunasSexoNotaRedacao.groupby('TP_SEXO').median()
 ```
+![mediana](https://github.com/EryckNoronha/dados-enem/blob/main/Imagens/mediana%20notas%20reda%C3%A7%C3%A3o.png)
 ```python
 #O comando decribe já tras todas aas informações
 #std é o disvio padrão
 colunasSexoNotaRedacao.groupby('TP_SEXO').describe()
 ```
+![função describe](https://github.com/EryckNoronha/dados-enem/blob/main/Imagens/describe%20nota%20reda%C3%A7%C3%A3o%20sexo.png)
 ```python
 #posso chamar nas variavael as colunas
 colunasSelecionadas = ['NU_INSCRICAO','NU_NOTA_MAT','NU_NOTA_REDACAO','Q001','Q002']
@@ -160,16 +173,15 @@ socialEnem['Resposta_Q002'] = [Q001eQ002[resp] for resp in socialEnem.Q002]
 ```python
 socialEnem.head()
 ```
+![respotas equivalentes as colunas](https://github.com/EryckNoronha/dados-enem/blob/main/Imagens/respota%20equivalente%20a%20cada%20letra.png)
 ```python
 #criando variavel para analisar reposta
 #sort_values - ordena os valores, by é por onde,ascending=False quero do maior para o menor 
 a = socialEnem.filter(items=['NU_INSCRICAO','Resposta_Q001']).groupby('Resposta_Q001').count().sort_values(by='NU_INSCRICAO',ascending=False)
 a
 ```
-```python
-#grafico de linha
-a.plot()
-```
+![contagem respostas pai](https://github.com/EryckNoronha/dados-enem/blob/main/Imagens/contagem%20das%20respostas%20rela%C3%A7%C3%A3o%20pai.png)
+
 ```python
 #adicionando uma coluna existente
 #mostrei na varialvel entre colchetes
@@ -177,6 +189,7 @@ a.plot()
 socialEnem['SG_UF_RESIDENCIA'] = d.SG_UF_RESIDENCIA
 socialEnem.head()
 ```
+![incluindo estados](https://github.com/EryckNoronha/dados-enem/blob/main/Imagens/repostas%20inclindo%20estados.png)
 ```python
 #analisando pelo estado do RJ
 #as \ permitem que pule linha sem dar erro
@@ -187,6 +200,7 @@ analiseMae = socialEnem.filter(items=['NU_INSCRICAO','Resposta_Q002'])\
              .count().sort_values(by='NU_INSCRICAO', ascending = False)
 analiseMae
 ```
+![por estado rj](https://github.com/EryckNoronha/dados-enem/blob/main/Imagens/resposta%20pelo%20RJ.png)
 ```python
 #para arrumar as casas decimais que desejo
 pd.set_option('display.precision',2)
@@ -198,6 +212,7 @@ mediaMaesEstado = socialEnem.filter(items=['SG_UF_RESIDENCIA','NU_NOTA_REDACAO',
                   .mean()
 mediaMaesEstado
 ```
+![media resisdencias](https://github.com/EryckNoronha/dados-enem/blob/main/Imagens/media%20das%20residencias.png)
 ```python
 #fazendo grafico com matplotlib
 fig, ax = plt.subplots(figsize=(35,35))
