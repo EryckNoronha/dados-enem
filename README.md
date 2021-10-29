@@ -216,3 +216,10 @@ socialEnem.filter(items=['SG_UF_RESIDENCIA','Q002','NU_NOTA_REDACAO'])\
                   .mean().sort_values(by='NU_NOTA_REDACAO', ascending=False)\
                   .unstack().plot(ax=ax, )
 ```
+**Conclusão**
+Com este estudo é possivel :
+- Analisar valores quantiativos, media, moda variancia 
+- Foi feito um comando de porcentagem para analise de uma coluna
+- Atribuição de valores de dicionario ao dataframe
+- plot simples de grafico
+- Analise por relação de colunas
