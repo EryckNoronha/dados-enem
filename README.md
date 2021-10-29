@@ -47,24 +47,13 @@ colunas_selecionadas_d = ['TP_SEXO','NO_MUNICIPIO_ESC','NU_IDADE', 'CO_UF_ESC', 
        'IN_MATERIAL_ESPECIFICO', 'IN_NOME_SOCIAL','NU_NOTA_REDACAO']
 ```
 
+- Crio uma variavel com as colunas desejadas neste caso criei: colunas_selecionadas_d\
+- Atribuo a variavel do data frame o comando filter\
+- Chamo as novas colunas com a função items
 ```python
-#crio uma variavel com as colunas desejadas neste caso criei:colunas_selecionadas_d
-#atribuo a variavel do data frame o comando filter
-#chamo as novas colunas com a função items
-
 d_selcionados=d.filter(items=colunas_selecionadas_d)
 ```
-```python
-d_selcionados.head()
-```
-```python
-coluna_no_município_residencia = d_selcionados['NO_MUNICIPIO_ESC']
-```
-```python
-#value_counts - conta cada item da coluna
-#sort_index - ordem alfabetica
-coluna_no_município_residencia.value_counts().sort_index()
-```
+- Analisando a idade dos participantes
 ```python
 i = d_selcionados['NU_IDADE']
 ```
@@ -76,16 +65,11 @@ plt.suptitle('Idade dos participantes')
 i.hist(bins=30)
 ```
 ![Quantidade de participantes por idade](https://github.com/EryckNoronha/dados-enem/blob/main/Imagens/Idade_dos_participantes.png)
+
+- Analise do sexo dos participantes do ENEM
 ```python
 #selecionando coluna
 colunasSexo = d_selcionados['TP_SEXO']
-```
-```python
-#contando so valores por categoria
-tp_sexo = colunasSexo.value_counts()
-```
-```python
-tp_sexo
 ```
 ```python
 #calculando a porcentagem dos valores
@@ -153,8 +137,9 @@ colunasSelecionadas = ['NU_INSCRICAO','NU_NOTA_MAT','NU_NOTA_REDACAO','Q001','Q0
 socialEnem = d.filter(items=colunasSelecionadas).dropna()
 socialEnem
 ```
+- As infromações a seguir foram retiradas do dicionario dos micro dados\
+- Estas informações seram concatenadas com o dataframe já criado
 ```python
-#criando um dicionario 
 Q001eQ002={
 'A':'Nunca estudou',
 'B':'Não completou a 4ª série/5º ano do Ensino Fundamental.',
@@ -174,6 +159,9 @@ socialEnem['Resposta_Q002'] = [Q001eQ002[resp] for resp in socialEnem.Q002]
 socialEnem.head()
 ```
 ![respotas equivalentes as colunas](https://github.com/EryckNoronha/dados-enem/blob/main/Imagens/respota%20equivalente%20a%20cada%20letra.png)
+
+- Analise: Dsitribuição das escolaridade do pai\
+obs. A coluna Q001 é a escolaridade do pai e Q002 escolaridade da mãe 
 ```python
 #criando variavel para analisar reposta
 #sort_values - ordena os valores, by é por onde,ascending=False quero do maior para o menor 
@@ -185,11 +173,13 @@ a
 ```python
 #adicionando uma coluna existente
 #mostrei na varialvel entre colchetes
-#d é o dataframe original ponto o nome da coluna que quero
+#d é o dataframe original colocando o nome da coluna desejado
 socialEnem['SG_UF_RESIDENCIA'] = d.SG_UF_RESIDENCIA
 socialEnem.head()
 ```
 ![incluindo estados](https://github.com/EryckNoronha/dados-enem/blob/main/Imagens/repostas%20inclindo%20estados.png)
+- Como foi a escolaridade da mae dos participantes no estado do RJ
+
 ```python
 #analisando pelo estado do RJ
 #as \ permitem que pule linha sem dar erro
@@ -213,6 +203,8 @@ mediaMaesEstado = socialEnem.filter(items=['SG_UF_RESIDENCIA','NU_NOTA_REDACAO',
 mediaMaesEstado
 ```
 ![media resisdencias](https://github.com/EryckNoronha/dados-enem/blob/main/Imagens/media%20das%20residencias.png)
+
+- Notas de redação referente a cada estado
 ```python
 #fazendo grafico com matplotlib
 fig, ax = plt.subplots(figsize=(35,35))
@@ -224,4 +216,3 @@ socialEnem.filter(items=['SG_UF_RESIDENCIA','Q002','NU_NOTA_REDACAO'])\
                   .mean().sort_values(by='NU_NOTA_REDACAO', ascending=False)\
                   .unstack().plot(ax=ax, )
 ```
-
